@@ -29,8 +29,7 @@ int main()
     int n;
     cin >> n;
     n = 4 * n - 3;
-    for (int i = 0; i < n; i++)
-        stars.assign(n, vector<char>(n, ' '));
+    stars.assign(n, vector<char>(n, ' '));
 
     drawStars(0, 0, n, n);
 

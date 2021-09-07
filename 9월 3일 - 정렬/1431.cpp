@@ -8,23 +8,23 @@
 
 using namespace std;
 
-int toDigit(char ch)
+int toDigit(string str)
 {
-    if (isdigit(ch))
-        return ch - '0';
-    return 0;
+    int sum = 0;
+    for (int i = 0; i < str.length(); i++)
+    {
+        char ch = str[i];
+        if (isdigit(ch))
+            sum += ch - '0';
+    }
+    return sum;
 }
 
 bool compSerials(string a, string b)
 {
     if (a.length() != b.length())
         return a.length() < b.length();
-    int sumA = 0, sumB = 0;
-    for (int i = 0; i < a.length(); i++)
-    {
-        sumA += toDigit(a[i]);
-        sumB += toDigit(b[i]);
-    }
+    int sumA = toDigit(a), sumB = toDigit(b);
     if (sumA != sumB)
         return sumA < sumB;
     return a < b;
