@@ -38,8 +38,7 @@ int main()
             applicants[n] = score;
         }
         sort(applicants.begin(), applicants.end());
-        result = calcPass(applicants);
-        cout << result << endl;
+        cout << calcPass(applicants) << "\n";
     }
 
     return 0;

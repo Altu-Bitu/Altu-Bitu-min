@@ -8,6 +8,13 @@
 
 using namespace std;
 
+int toDigit(char ch)
+{
+    if (isdigit(ch))
+        return ch - '0';
+    return 0;
+}
+
 bool compSerials(string a, string b)
 {
     if (a.length() != b.length())
@@ -15,10 +22,8 @@ bool compSerials(string a, string b)
     int sumA = 0, sumB = 0;
     for (int i = 0; i < a.length(); i++)
     {
-        if (isdigit(a[i]))
-            sumA += (a[i] - '0');
-        if (isdigit(b[i]))
-            sumB += (b[i] - '0');
+        sumA += toDigit(a[i]);
+        sumB += toDigit(b[i]);
     }
     if (sumA != sumB)
         return sumA < sumB;
@@ -38,7 +43,7 @@ int main()
     sort(serials.begin(), serials.end(), compSerials);
 
     for (int i = 0; i < n; i++)
-        cout << serials[i] << endl;
-    
+        cout << serials[i] << "\n";
+
     return 0;
 }

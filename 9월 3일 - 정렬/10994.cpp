@@ -30,16 +30,14 @@ int main()
     cin >> n;
     n = 4 * n - 3;
     for (int i = 0; i < n; i++)
-    {
-        vector<char> v(n, ' ');
-        stars.assign(n, v);
-    }
+        stars.assign(n, vector<char>(n, ' '));
+
     drawStars(0, 0, n, n);
 
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
             cout << stars[i][j];
-        cout << endl;
+        cout << "\n";
     }
 }

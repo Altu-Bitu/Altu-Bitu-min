@@ -7,7 +7,7 @@
 
 using namespace std;
 
-bool compPoints(pair<int, int> a, pair<int, int> b)
+bool compPoints(const pair<int, int> &a, const pair<int, int> &b)
 {
     if (a.second == b.second)
         return (a.first < b.first);
@@ -32,6 +32,6 @@ int main()
 
     for (int i = 0; i < n; i++)
         printf("%d %d\n", points[i].first, points[i].second);
-        
+
     return 0;
 }
