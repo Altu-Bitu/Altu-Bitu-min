@@ -45,19 +45,9 @@ int main()
             else if (cmd == "remove")
                 s[x] = false;
             else if (cmd == "check")
-            {
-                if (s[x])
-                    cout << 1 << '\n';
-                else
-                    cout << 0 << '\n';
-            }
+                cout << s[x] << '\n';
             else if (cmd == "toggle")
-            {
-                if (s[x])
-                    s[x] = false;
-                else
-                    s[x] = true;
-            }
+                s[x] = !s[x];
         }
     }
 

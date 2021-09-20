@@ -5,9 +5,24 @@
 
 using namespace std;
 
+int calcNumOfSubject(priority_queue<int, vector<int>, greater<int>> mileage_list, int max_mileage)
+{
+    int result = 0;
+    while (true)
+    {
+        max_mileage -= mileage_list.top();
+
+        // 주어진 마일리지를 모두 쓰거나 마일리지 투자가 끝나면 종료
+        if (max_mileage < 0 || mileage_list.empty())
+            return result;
+
+        mileage_list.pop();
+        result++;
+    }
+}
+
 int main()
 {
-    int result = 0;                                            // 최대로 들을 수 있는 과목 수
     int n;                                                     // 과목 수
     int m;                                                     // 주어진 마일리지
     int p;                                                     // 신청 인원 수
@@ -24,14 +39,9 @@ int main()
 
         cin >> p >> l;
 
-        // (신청 인원 < 수강 인원) 이면 1 마일리지 투자
+        // (신청 인원 < 수강 인원) 이면 가장 적은 마일리지 투자
         if (p < l)
-        {
-            while (p--)
-                cin >> mileage;
-            my_mileage.push(1);
-            continue;
-        }
+            other_mileage.push(1);
 
         // 다른 사람들이 투자한 마일리지 목록 입력
         while (p--)
@@ -54,19 +64,7 @@ int main()
         my_mileage.push(other_mileage.top());
     }
 
-    // 오름차순으로 마일리지를 투자
-    while (true)
-    {
-        m -= my_mileage.top();
-
-        // 주어진 마일리지를 모두 쓰거나 마일리지 투자가 끝나면 종료
-        if (m < 0 || my_mileage.empty())
-            break;
-
-        my_mileage.pop();
-        result++;
-    }
     // 출력
-    cout << result;
+    cout << calcNumOfSubject(my_mileage, m);
     return 0;
 }
