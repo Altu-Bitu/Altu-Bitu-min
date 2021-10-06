@@ -13,46 +13,17 @@ using namespace std;
         => 먼저 등장한 숫자 선택
 */
 
-// number에서 k개의 수를 제거했을 때, 찾을 수 있는 가장 큰 숫자를 구하는 함수
-// start번째 숫자부터 검사 시작
-string findBigNumber(string number, int start, int k)
-{
-    int len = number.length() - start; // 남은(검사할) 숫자 개수
-    int pick = number.length() - k;    // 뽑을 숫자 개수
-
-    // 뽑을 숫자 개수가 0이면 빈 문자열 리턴
-    if (pick == 0)
-        return "";
-
-    // 남은 숫자 개수와 뽑을 숫자 개수가 같다면 남은 숫자들을 그대로 리턴
-    if (len == pick)
-        return number.substr(start, pick);
-
-    int big_idx = start; // 가장 큰 숫자의 인덱스
-
-    // 가장 큰 수 찾기
-    for (int i = start + 1; i <= k; i++)
-        if (number[big_idx] < number[i])
-            big_idx = i;
-
-    return number[big_idx] + findBigNumber(number, big_idx + 1, k + 1);
-}
-
 string solution(string number, int k)
 {
     string answer;
     int start = 0; // 검사를 시작할 인덱스
-    int len;       // 남은(검사할) 숫자 개수
-    int pick;      // 뽑을 숫자 개수
+
     while (k < number.length())
     {
-        len = number.length() - start;
-        pick = number.length() - k;
-
-        // 남은 숫자 개수와 뽑을 숫자 개수가 같다면 남은 숫자들을 그대로 추가
-        if (len == pick)
+        // 남은 숫자들을 모두 뽑아야하는 경우 그대로 나머지를 추가
+        if (start == k)
         {
-            answer += number.substr(start, pick);
+            answer += number.substr(start);
             break;
         }
 
