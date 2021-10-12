@@ -7,17 +7,19 @@ using namespace std;
 
 bool canFolding(const string paper)
 {
-    int mid = paper.length() / 2;
-    if (paper.length() <= 3)
-    {
-        if (paper.length() == 3 && paper[mid - 1] == paper[mid + 1])
-            return false;
+    // Conquer: 문자열의 길이가 1
+    if (paper.length() == 1)
         return true;
-    }
 
-    if (canFolding(paper.substr(0, mid)) && canFolding(paper.substr(mid + 1)))
-        return true;
-    return false;
+    // Combine: mid를 기준으로 접을 수 있는지 확인
+    int mid = paper.length() / 2;
+    for (int i = 1; i <= mid; i++)
+        if (paper[mid - i] == paper[mid + i])
+            return false;
+
+    // Divide: 문자열을 절반으로 나누기
+    // 이미 mid를 기준으로 좌우가 반대임을 확인했기 때문에 한 쪽만 확인하면 됨
+    return canFolding(paper.substr(0, mid));
 }
 
 int main()
@@ -26,11 +28,10 @@ int main()
 
     // 입력
     cin >> t;
-    cin.ignore();
     while (t--)
     {
         string paper;
-        getline(cin, paper);
+        cin >> paper;
 
         if (canFolding(paper))
             cout << "YES\n";
