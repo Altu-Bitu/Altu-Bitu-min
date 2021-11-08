@@ -21,8 +21,8 @@ void movePoint(deque<int> &d, vector<int> &time, int p, int next_p)
     // 다음 정점 == (현재 정점 * 2) 이면, 순간이동한 것이므로 가중치(이동 소요 시간)를 0으로 설정
     int next_t = (p * 2 == next_p) ? 0 : 1;
 
-    // 기존 시간보다 새 시간(현재 정점까지의 시간 + 현재 정점에서 다음 정점까지의 시간)이 적다면 갱신
-    if (time[next_p] > time[p] + next_t)
+    // 첫 방문이라면, 가중치 갱신 
+    if (time[next_p] == INF)
     {
         time[next_p] = time[p] + next_t;
 
