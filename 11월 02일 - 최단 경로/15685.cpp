@@ -4,6 +4,7 @@
 #include <vector>
 
 using namespace std;
+typedef pair<int, int> point;
 
 // 격자 보드의 크기
 const int SIZE = 101;
@@ -66,6 +67,20 @@ void drawDragonCurve(int x, int y, int d, int g)
     }
 }
 
+// 더 나은 풀이
+void drawDragonCurve2(vector<int> &directions, point &p)
+{
+    int size = directions.size();
+    for (int i = size - 1; i >= 0; i--)
+    {
+        int d = (directions[i] + 1) % 4;
+        p.first += dy[d];
+        p.second += dx[d];
+        board[p.first][p.second] = true;
+        directions.push_back(d);
+    }
+}
+
 int main()
 {
     cin.tie(NULL);
@@ -82,7 +97,13 @@ int main()
         cin >> x >> y >> d >> g;
 
         // 드래곤 커브를 격자 위에 그림
-        drawDragonCurve(x, y, d, g);
+        // drawDragonCurve(x, y, d, g);
+        vector<int> directions;
+        directions.push_back(d);
+        point p = {y + dy[d], x + dx[d]};
+        board[y][x] = board[p.first][p.second] = true;
+        while (g--)
+            drawDragonCurve2(directions, p);
     }
 
     // 네 꼭짓점이 모두 드래곤 커브의 일부인 정사각형의 개수를 찾음
