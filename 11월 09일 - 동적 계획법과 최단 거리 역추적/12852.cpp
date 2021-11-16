@@ -36,37 +36,23 @@ int NtoOne(int n, vector<int> &path)
         if (x == 1)
             break;
 
-        int new_x;
-        // 3으로 나누는 연산
+        vector<int> nexts; // 3가지 연산을 사용해 갈 수 있는 다음 숫자들을 저장하는 벡터
         if (x % 3 == 0)
-        {
-            new_x = x / 3;
-            // new_x가 아직 도착하지 않은 수라면
-            if (!path[new_x])
-            {
-                path[new_x] = x;           // new_x의 직전 노드(연산 이전 수) 기록
-                time[new_x] = time[x] + 1; // new_x까지의 연산 횟수 기록
-                q.push(new_x);
-            }
-        }
-        // 2로 나누는 연산
+            nexts.push_back(x / 3);
         if (x % 2 == 0)
+            nexts.push_back(x / 2);
+        if (x - 1 > 0)
+            nexts.push_back(x - 1);
+
+        for (int next : nexts)
         {
-            new_x = x / 2;
-            if (!path[new_x])
+            // next를 아직 방문하지 않았다면
+            if (!path[next])
             {
-                path[new_x] = x;
-                time[new_x] = time[x] + 1;
-                q.push(new_x);
+                path[next] = x;           // next의 직전 노드(연산 이전 수) 기록
+                time[next] = time[x] + 1; // next까지의 연산 횟수 기록
+                q.push(next);
             }
-        }
-        // 1을 빼는 연산
-        new_x = x - 1;
-        if (new_x > 0 && !path[new_x])
-        {
-            path[new_x] = x;
-            time[new_x] = time[x] + 1;
-            q.push(new_x);
         }
     }
     return time[1];
