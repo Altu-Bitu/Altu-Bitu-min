@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 typedef pair<int, string> lcs; // <LCS의 길이, LCS의 문자열>
@@ -39,6 +40,58 @@ lcs findLCS(string s1, string s2)
     return matrix[size1][size2];
 }
 
+// 더 나은 풀이 
+// 샘플 코드 참고: https://github.com/Altu-Bitu/Notice/blob/main/11%EC%9B%94%2009%EC%9D%BC%20-%20%EB%8F%99%EC%A0%81%20%EA%B3%84%ED%9A%8D%EB%B2%95%EA%B3%BC%20%EC%B5%9C%EB%8B%A8%20%EA%B1%B0%EB%A6%AC%20%EC%97%AD%EC%B6%94%EC%A0%81/%EA%B3%BC%EC%A0%9C/9252.cpp)
+
+typedef vector<vector<int>> matrix;
+
+int n, m;
+vector<int> dr = {-1, 0, -1};
+vector<int> dc = {0, -1, -1};
+
+string backtrack(string s1, matrix &path)
+{
+    string answer;
+    int r = n, c = m;
+    int dir = path[r][c];
+    while (dir != -1)
+    {
+        if (dir == 2)
+            answer += s1[r - 1];
+        r += dr[dir];
+        c += dc[dir];
+        dir = path[r][c];
+    }
+    reverse(answer.begin(), answer.end());
+    return answer;
+}
+
+int calcLCSLength(string s1, string s2, matrix &path)
+{
+    matrix dp(n + 1, vector<int>(m + 1, 0));
+
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+        {
+            if (s1[i - 1] == s2[j - 1])
+            {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                path[i][j] = 2;
+            }
+            else
+            {
+                dp[i][j] = dp[i - 1][j];
+                path[i][j] = 0;
+                if (dp[i][j - 1] > dp[i - 1][j])
+                {
+                    dp[i][j] = dp[i][j-1];
+                    path[i][j] = 1;
+                }
+            }
+        }
+    return dp[n][m];
+}
+
 int main()
 {
     string s1, s2;
@@ -46,10 +99,21 @@ int main()
     // 입력
     cin >> s1 >> s2;
 
+    n = s1.length();
+    m = s2.length();
+    matrix path(n + 1, vector<int>(m + 1, -1));
+
     // 연산 및 출력
+    /*
     lcs answer = findLCS(s1, s2);
     cout << answer.first << '\n';
     if (answer.first != 0)
         cout << answer.second;
-    return 0;
+    */
+    int len = calcLCSLength(s1, s2, path);
+    cout << len << '\n';
+    if (!len)
+        return 0;
+    string str = backtrack(s1, path);
+    cout << str;
 }
