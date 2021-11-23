@@ -23,18 +23,15 @@ int calcNumOfDecode(string code)
 
     for (int i = 2; i <= len; i++)
     {
-        int prev = code[i - 2] - '0';
-        int cur = code[i - 1] - '0';
-
         // 이전 숫자와 함께 하나의 글자로 변환 가능한 경우
-        if (prev == 1 || (prev == 2 && cur <= 6))
+        if (code[i - 2] == '1' || (code[i - 2] == '2' && code[i - 1] <= '6'))
             // 단, 현재 숫자가 0이면 무조건 이전 숫자와 함께 변환해야 함
-            if (cur == 0)
+            if (code[i - 1] == '0')
                 dp[i] = dp[i - 2] % MOD;
             else
                 dp[i] = (dp[i - 1] + dp[i - 2]) % MOD;
         // 단독으로만 변환하는 경우
-        else if (cur > 0)
+        else if (code[i - 1] != '0')
             dp[i] = dp[i - 1] % MOD;
         // 해독할 수 없는 경우
         else
