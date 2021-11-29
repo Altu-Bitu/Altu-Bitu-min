@@ -53,7 +53,7 @@ int main()
     // 연산
     int ans_height, ans_time = MAX_TIME;
     // 가능한 모든 높이에 대해 땅고르기가 가능한지 검사
-    for (int h = 256; h >= 0; h--)
+    for (int h = MAX_HEIGHT; h >= 0; h--)
     {
         int time = calcTime(h, ground, b);
         if (ans_time > time)

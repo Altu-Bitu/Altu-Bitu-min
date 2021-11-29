@@ -20,13 +20,14 @@ struct cmp
 {
     bool operator()(const pair<int, ci> &a, const pair<int, ci> &b)
     {
-        if (a.first == b.first)
-        {
-            if (a.second.first == b.second.first)
-                return a.second.second > b.second.second;
-            return a.second.first > b.second.first;
-        }
-        return a.first > b.first;
+        int dist = a.first - b.first;
+        int dx = a.second.first - b.second.first;
+        int dy = a.second.second - b.second.second;
+        if (!dist)
+            return dist;
+        if (!dx)
+            return dx;
+        return dy;
     }
 };
 
